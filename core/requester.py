@@ -2,10 +2,17 @@ import random
 import time
 
 import requests
+import ssl
 from requests.exceptions import TooManyRedirects
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
+# SSL cert verification disabled
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+context = ssl.SSLContext()
+context.verify_mode = ssl.CERT_NONE
 
 SESSION = requests.Session()
+SESSION.verify = False
 SESSION.max_redirects = 3
 
 def requester(
